@@ -1,0 +1,53 @@
+{# zaiko_title.html #}
+<section class="py-4 bg-light">
+  <div class="container">
+    <div class="row align-items-center g-3">
+
+      <div class="col-lg-7">
+        <h1 class="mb-2">在庫管理システム</h1>
+        <p class="text-muted mb-2">
+          ログインユーザごとに在庫情報を登録・確認できます。
+          商品名・カテゴリ・数量を整理して、状況をひと目で把握できます。
+        </p>
+
+        {% if user.is_authenticated %}
+          <p class="mb-3 small text-muted">
+            現在ログイン中：{{ user.username }}
+          </p>
+          <a href="{% url 'zaiko:item_create' %}" class="btn btn-primary me-2 mb-2">
+            在庫を登録する
+          </a>
+          <a href="{% url 'zaiko:mypage' %}" class="btn btn-outline-primary mb-2">
+            マイ在庫を見る
+          </a>
+        {% else %}
+          <p class="mb-3 text-muted">
+            在庫の登録・閲覧にはログインが必要です。
+          </p>
+          <a href="{% url 'accounts:signup' %}" class="btn btn-primary me-2 mb-2">
+            新規ユーザー登録
+          </a>
+          <a href="{% url 'accounts:login' %}" class="btn btn-outline-secondary mb-2">
+            ログイン
+          </a>
+        {% endif %}
+      </div>
+
+      <div class="col-lg-5">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h2 class="h6 mb-3">在庫を検索</h2>
+            <form method="GET" action="{% url 'zaiko:index' %}" class="d-flex">
+                <input type="text" name="q" class="form-control search-box" placeholder="商品名で検索">
+                <button class="btn btn-primary search-btn ms-2">検索</button>
+            </form>
+            <p class="small text-muted mt-2 mb-0">
+              一部の文字だけでも検索できます（例：ペン）。
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

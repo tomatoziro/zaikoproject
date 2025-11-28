@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block title %}在庫詳細{% endblock %}
+
+{% block contents %}
+<div class="container py-4">
+
+  <div class="card shadow-sm mb-4">
+    <div class="card-header">
+      <h2 class="h5 mb-0">{{ item.name }}</h2>
+    </div>
+
+    <div class="card-body">
+
+      <p class="mb-1"><strong>カテゴリ：</strong>
+        {% if item.category %}
+          {{ item.category }}
+        {% else %}
+          未分類
+        {% endif %}
+      </p>
+
+      <p class="mb-1"><strong>数量：</strong>
+        {{ item.quantity }} 個
+      </p>
+
+      <p class="mb-1">
+        <strong>登録ユーザ：</strong>
+        {{ item.owner.username }}
+      </p>
+
+      <p class="text-muted">
+        <strong>登録日時：</strong>
+        {{ item.created_at|date:"Y/m/d H:i" }}
+      </p>
+
+    </div>
+
+    <div class="card-footer d-flex justify-content-between">
+
+      <a href="{% url 'zaiko:index' %}"
+         class="btn btn-outline-secondary">
+         一覧に戻る
+      </a>
+
+      {% if user == item.owner %}
+      <div>
+        <a href="{% url 'zaiko:item_edit' item.id %}"
+           class="btn btn-primary me-2">
+          編集
+        </a>
+
+        <a href="{% url 'zaiko:item_delete' item.id %}"
+           class="btn btn-danger">
+          削除
+        </a>
+      </div>
+      {% endif %}
+
+      {% if item.memo %}
+        <p class="card-text">{{ item.memo|linebreaksbr }}</p>
+      {% endif %}
+    </div>
+
+  </div>
+
+</div>
+{% endblock %}

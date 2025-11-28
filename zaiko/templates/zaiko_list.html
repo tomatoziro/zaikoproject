@@ -1,0 +1,85 @@
+<div class="album py-4 bg-white">
+  <div class="container">
+
+    {% if items %}
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
+
+        {% for item in items %}
+        <div class="col">
+          <div class="card h-100 shadow-sm border-0">
+
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <span class="fw-bold text-truncate">{{ item.name }}</span>
+
+              <span class="badge
+                          {% if item.quantity <= 5 %}
+                            bg-danger
+                          {% elif item.quantity <= 20 %}
+                            bg-warning text-dark
+                          {% else %}
+                            bg-primary
+                          {% endif %}">
+                {{ item.quantity }} 個
+              </span>
+            </div>
+
+            <div class="card-body">
+              <p class="card-text mb-1 text-muted">
+                カテゴリ：
+                {% if item.category %}
+                  <a href="{% url 'zaiko:item_category' item.category %}">
+                    {{ item.category }}
+                  </a>
+                {% else %}
+                  未分類
+                {% endif %}
+              </p>
+
+              <p class="card-text mb-1">
+                登録者：
+                <a href="{% url 'zaiko:user_items' item.owner.id %}">
+                  {{ item.owner.username }}
+                </a>
+              </p>
+
+              {% if item.memo %}
+                <p class="card-text small text-muted mb-0">
+                  {{ item.memo|truncatechars:40 }}
+                </p>
+              {% endif %}
+            </div>
+
+            <div class="card-footer bg-transparent border-0 d-flex justify-content-between align-items-center">
+              <div class="btn-group">
+                <button type="button"
+                        class="btn btn-sm btn-outline-primary"
+                        onclick="location.href='{% url 'zaiko:item_detail' item.pk %}'">
+                  詳細
+                </button>
+                {% if user == item.owner %}
+                <button type="button"
+                        class="btn btn-sm btn-outline-secondary"
+                        onclick="location.href='{% url 'zaiko:item_edit' item.pk %}'">
+                  編集
+                </button>
+                {% endif %}
+              </div>
+
+              <small class="text-muted">
+                {{ item.created_at|date:"Y/m/d" }}
+              </small>
+            </div>
+
+          </div>
+        </div>
+        {% endfor %}
+
+      </div>
+    {% else %}
+      <div class="alert alert-secondary" role="alert">
+        登録されている在庫はありません。
+      </div>
+    {% endif %}
+
+  </div>
+</div>

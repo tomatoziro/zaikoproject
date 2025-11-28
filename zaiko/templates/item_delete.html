@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block title %}在庫削除{% endblock %}
+
+{% block contents %}
+<br>
+
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+
+      <div class="card shadow-sm">
+        <div class="card-header bg-danger text-white">
+          <h5 class="mb-0">在庫削除の確認</h5>
+        </div>
+
+        <div class="card-body">
+
+          <p class="mb-3">この在庫データを本当に削除しますか？</p>
+
+          <ul class="list-group mb-4">
+            <li class="list-group-item">
+              <strong>商品名：</strong> {{ object.name }}
+            </li>
+            <li class="list-group-item">
+              <strong>カテゴリ：</strong> {{ object.category|default:"未分類" }}
+            </li>
+            <li class="list-group-item">
+              <strong>数量：</strong> {{ object.quantity }} 個
+            </li>
+          </ul>
+
+          <form method="POST">
+            {% csrf_token %}
+
+            <button type="submit" class="btn btn-danger me-2">
+              削除する
+            </button>
+
+            <a href="{% url 'zaiko:item_detail' object.pk %}"
+               class="btn btn-outline-secondary">
+              キャンセル
+            </a>
+          </form>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

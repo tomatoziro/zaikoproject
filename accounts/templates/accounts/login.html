@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block title %}ログイン{% endblock %}
+
+{% block contents %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+
+      <h2 class="mb-3">ログイン</h2>
+      <p class="text-muted small mb-4">
+        正しいユーザー名とパスワードを入力してください。どちらのフィールドも大文字と小文字は区別されます。
+      </p>
+
+      {% if form.non_field_errors %}
+        <div class="alert alert-danger">
+          {{ form.non_field_errors }}
+        </div>
+      {% endif %}
+
+      <form method="post" novalidate>
+        {% csrf_token %}
+
+        <div class="mb-3">
+          <label for="{{ form.username.id_for_label }}" class="form-label">
+            ユーザー名
+          </label>
+          {{ form.username }}
+          {% if form.username.errors %}
+            <div class="text-danger small">
+              {{ form.username.errors }}
+            </div>
+          {% endif %}
+        </div>
+
+        <div class="mb-3">
+          <label for="{{ form.password.id_for_label }}" class="form-label">
+            パスワード
+          </label>
+          {{ form.password }}
+          {% if form.password.errors %}
+            <div class="text-danger small">
+              {{ form.password.errors }}
+            </div>
+          {% endif %}
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">
+          ログイン
+        </button>
+      </form>
+
+      <p class="mt-3 mb-0 small">
+        アカウントをお持ちでない場合は
+        <a href="{% url 'accounts:signup' %}">新規登録</a>
+        してください。
+      </p>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

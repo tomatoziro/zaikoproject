@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block title %}在庫編集{% endblock %}
+
+{% block contents %}
+<div class="container py-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+
+      <div class="card shadow-sm mb-4">
+        <div class="card-header bg-secondary text-white">
+          <h5 class="mb-0">在庫情報を編集する</h5>
+        </div>
+
+        <div class="card-body">
+
+          <form method="post" novalidate>
+            {% csrf_token %}
+
+            <div class="mb-3">
+              <label class="form-label">商品名</label>
+              {{ form.name }}
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">カテゴリ</label>
+              {{ form.category }}
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">数量</label>
+              {{ form.quantity }}
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">メモ</label>
+              {{ form.memo }}
+            </div>
+
+            <button type="submit" class="btn btn-primary">
+              更新する
+            </button>
+
+            <a href="{% url 'zaiko:item_detail' object.pk %}"
+               class="btn btn-outline-secondary ms-2">
+              詳細に戻る
+            </a>
+
+            <a href="{% url 'zaiko:item_delete' object.pk %}"
+               class="btn btn-outline-danger ms-2">
+              削除ページへ
+            </a>
+
+          </form>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}
